@@ -1,0 +1,79 @@
+20100309-02:55:26 : Created session
+20100309-02:58:06 : Created session
+20100309-03:01:49 : Created session
+20100309-03:05:15 : Created session
+20100309-03:13:00 : Created session
+20100309-03:13:35 : Connecting to 58.61.28.198 on port 8800
+20100309-03:13:36 : Disconnecting
+20100309-03:13:36 : Connecting to 58.61.28.198 on port 8800
+20100309-03:13:37 : Disconnecting
+20100309-03:14:06 : Connecting to 58.61.28.198 on port 8800
+20100309-03:14:07 : Disconnecting
+20100309-03:19:28 : Created session
+20100309-03:20:04 : Connecting to 58.61.28.198 on port 6600
+20100309-03:20:47 : Created session
+20100309-03:21:03 : Connecting to 58.61.28.198 on port 6600
+20100309-03:22:56 : Created session
+20100309-03:23:11 : Connecting to 58.61.28.198 on port 6600
+20100309-03:24:04 : Created session
+20100309-03:24:20 : Connecting to 58.61.28.198 on port 6600
+20100309-03:24:20 : Initiated logon request
+20100309-03:24:20 : Received logout request
+20100309-03:24:20 : Sending logout response
+20100309-03:24:20 : Disconnecting
+20100309-03:24:21 : Connecting to 58.61.28.198 on port 6600
+20100309-03:24:21 : Initiated logon request
+20100309-03:24:21 : Received logout request
+20100309-03:24:21 : Sending logout response
+20100309-03:24:21 : Disconnecting
+20100309-03:24:51 : Connecting to 58.61.28.198 on port 6600
+20100309-03:24:51 : Initiated logon request
+20100309-03:24:51 : Received logon response
+20100309-03:24:51 : MsgSeqNum too high, expecting 3 but received 7
+20100309-03:24:51 : Sent ResendRequest FROM: 3 TO: 0
+20100309-03:24:51 : Received ResendRequest FROM: 2 TO: 0
+20100309-03:24:51 : Sent SequenceReset TO: 7
+20100309-03:25:21 : MsgSeqNum too high, expecting 3 but received 9
+20100309-03:25:21 : Already sent ResendRequest FROM: 3 TO: 6.  Not sending another.
+20100309-03:25:27 : Sent test request TEST
+20100309-03:25:27 : MsgSeqNum too high, expecting 3 but received 10
+20100309-03:25:27 : Already sent ResendRequest FROM: 3 TO: 6.  Not sending another.
+20100309-03:25:56 : MsgSeqNum too high, expecting 3 but received 11
+20100309-03:25:56 : Already sent ResendRequest FROM: 3 TO: 6.  Not sending another.
+20100309-03:26:02 : MsgSeqNum too high, expecting 3 but received 12
+20100309-03:26:02 : Already sent ResendRequest FROM: 3 TO: 6.  Not sending another.
+20100309-03:26:03 : Timed out waiting for heartbeat
+20100309-03:26:03 : Disconnecting
+20100309-03:26:21 : Connecting to 58.61.28.198 on port 6600
+20100309-03:26:21 : Initiated logon request
+20100309-03:26:21 : Received logon response
+20100309-03:26:21 : MsgSeqNum too high, expecting 3 but received 13
+20100309-03:26:21 : Sent ResendRequest FROM: 3 TO: 0
+20100309-03:26:51 : Received ResendRequest FROM: 10 TO: 0
+20100309-03:26:51 : Sent SequenceReset TO: 12
+20100309-03:27:20 : MsgSeqNum too high, expecting 3 but received 15
+20100309-03:27:20 : Already sent ResendRequest FROM: 3 TO: 12.  Not sending another.
+20100309-03:27:27 : Sent test request TEST
+20100309-03:27:27 : MsgSeqNum too high, expecting 3 but received 16
+20100309-03:27:27 : Already sent ResendRequest FROM: 3 TO: 12.  Not sending another.
+20100309-03:27:57 : MsgSeqNum too high, expecting 3 but received 17
+20100309-03:27:57 : Already sent ResendRequest FROM: 3 TO: 12.  Not sending another.
+20100309-03:28:03 : Timed out waiting for heartbeat
+20100309-03:28:03 : Disconnecting
+20100309-03:28:21 : Connecting to 58.61.28.198 on port 6600
+20100309-03:28:21 : Initiated logon request
+20100309-03:28:21 : Received logon response
+20100309-03:28:21 : MsgSeqNum too high, expecting 3 but received 18
+20100309-03:28:21 : Sent ResendRequest FROM: 3 TO: 0
+20100309-03:28:51 : Received ResendRequest FROM: 15 TO: 0
+20100309-03:28:51 : Sent SequenceReset TO: 17
+20100309-03:29:20 : MsgSeqNum too high, expecting 3 but received 20
+20100309-03:29:20 : Already sent ResendRequest FROM: 3 TO: 17.  Not sending another.
+20100309-03:29:27 : Sent test request TEST
+20100309-03:29:27 : MsgSeqNum too high, expecting 3 but received 21
+20100309-03:29:27 : Already sent ResendRequest FROM: 3 TO: 17.  Not sending another.
+20100309-03:29:56 : MsgSeqNum too high, expecting 3 but received 22
+20100309-03:29:56 : Already sent ResendRequest FROM: 3 TO: 17.  Not sending another.
+20100309-03:29:59 : Initiated logout request
+20100309-03:29:59 : Received logout response
+20100309-03:29:59 : Disconnecting
