@@ -4,6 +4,7 @@ using System.Text;
 using QuickFix;
 using System.Collections;
 using System.Windows.Forms;
+using System.Runtime.InteropServices;
 
 
 namespace QuickFixInitiator
@@ -60,9 +61,20 @@ namespace QuickFixInitiator
                 string rawdata = option .Rawdata ;
                 message.setString(96, rawdata);
             }
-            Console.WriteLine("Enter toAdmin");
-            Console.WriteLine(message.ToString());
-            Console.WriteLine("Exit toAdmin");
+            else if (message is QuickFix42.Logout)
+            {
+                if (message.isSetField(58))
+                {
+                    string note = message.getString(58);
+                    if (OnError != null)
+                    {
+                        OnError(note, EventArgs.Empty);
+                    }
+                }
+            }
+            //Console.WriteLine("Enter toAdmin");
+            //Console.WriteLine(message.ToString());
+            //Console.WriteLine("Exit toAdmin");
           //  MessageBox.Show("toAdmin"+message .ToString ());  //20091229 
         }
         /// <summary>
@@ -73,7 +85,7 @@ namespace QuickFixInitiator
         public void toApp(QuickFix.Message pMessage, QuickFix.SessionID pSessionID) 
         { 
             //可以自行做业务逻辑，例如转发、LOG等
-            MessageBox.Show("toApp "+pMessage .ToString ());
+            //MessageBox.Show("toApp "+pMessage .ToString ());
         } 
         /// <summary>
         /// 对端发来的会话层报文，通过CONSOLE来输出
@@ -82,10 +94,10 @@ namespace QuickFixInitiator
         /// <param name="pSessionID"></param>
         public void fromAdmin(QuickFix.Message pMessage, QuickFix.SessionID pSessionID) 
         {
-            Console.WriteLine("Enter fromAdmin");
-            Console.WriteLine(pMessage.ToString());
+            //Console.WriteLine("Enter fromAdmin");
+            //Console.WriteLine(pMessage.ToString());
             //MessageBox.Show("fromAdmin 动作"+pMessage .ToString ());  //20091229
-            Console.WriteLine("Exit fromAdmin");
+            //Console.WriteLine("Exit fromAdmin");
         }    
         /// <summary>
         /// 来自对端的应用层报文，需要业务逻辑处理
@@ -95,7 +107,7 @@ namespace QuickFixInitiator
         public void fromApp(QuickFix.Message pMessage, QuickFix.SessionID pSessionID) 
         {
             base.crack(pMessage, pSessionID);//调用默认处理方法即可
-            MessageBox.Show("" + pMessage.ToString());
+            //MessageBox.Show("" + pMessage.ToString());
             pMessage.Dispose();//清理现场，重要
         }
 
@@ -127,6 +139,32 @@ namespace QuickFixInitiator
                 session.logout();
             }
             //this._socketInitiator.stop();//必须注释这条语句，否则无法清理现场
+        }
+        public int IncomingSeq
+        {
+            get
+            {
+                Session session = Session.lookupSession(_ssnid);
+                return session.getExpectedTargetNum();
+            }
+            set
+            {
+                Session session = Session.lookupSession(_ssnid);
+                session.setNextTargetMsgSeqNum (value);
+            }
+        }
+        public int OutgoingSeq
+        {
+            get
+            {
+                Session session = Session.lookupSession(_ssnid);
+                return session.getExpectedSenderNum();
+            }
+            set
+            {
+                Session session = Session.lookupSession(_ssnid);
+                session.setNextSenderMsgSeqNum(value);
+            }
         }
         public void Send(QuickFix42.NewOrderSingle message)
         {
@@ -175,6 +213,7 @@ namespace QuickFixInitiator
                 Console.WriteLine(ex.Message);
             }
         }
+        
     }
 
     //在登录消息的RawData域送入柜台登录所需的相关字段,格式为:
@@ -202,7 +241,7 @@ namespace QuickFixInitiator
                 case "K":
                 case "X":
                 case "N":
-                    rawdata = logintype + ":" + id + ":" + pwd;
+                    rawdata = logintype + ":" + id + ":" + EncodePassword(id,pwd );
                     break;
                 default :
                     rawdata = "";
@@ -216,6 +255,19 @@ namespace QuickFixInitiator
                 return rawdata;
             }
         }
+        private string EncodePassword(string key, string password)
+        {
+            int enclvl = 6;
+            StringBuilder enc = new StringBuilder();
+            int nSrcDataLen = password.Length;
+            int nDestDataBufLen = 2 * nSrcDataLen;
+            nDestDataBufLen = nDestDataBufLen < 32 ? 32 : nDestDataBufLen;
+            KDEncode(enclvl, password, nSrcDataLen, enc, nDestDataBufLen, key, key.Length);
+            return enc.ToString();
+        }
+        [DllImport("KDEncodeCli.dll")]
+        public static extern int KDEncode(int nEncode_Level, string pSrcData, int nSrcDataLen, StringBuilder pDestData, int nDestDataBufLen, string pKey, int nKeyLen);
+       
     }
     public class ExecutionReportEventArgs : EventArgs
     {
