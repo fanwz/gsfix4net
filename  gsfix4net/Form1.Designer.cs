@@ -78,6 +78,8 @@ namespace QuickFixInitiator
             this.textBox9 = new System.Windows.Forms.TextBox();
             this.textBox8 = new System.Windows.Forms.TextBox();
             this.button3 = new System.Windows.Forms.Button();
+            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.button4 = new System.Windows.Forms.Button();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.listView1 = new System.Windows.Forms.ListView();
             this.columnHeader1 = new System.Windows.Forms.ColumnHeader();
@@ -99,6 +101,8 @@ namespace QuickFixInitiator
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.状态查询ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.label16 = new System.Windows.Forms.Label();
+            this.button5 = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
@@ -106,6 +110,7 @@ namespace QuickFixInitiator
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
+            this.tabPage3.SuspendLayout();
             this.groupBox4.SuspendLayout();
             this.contextMenuStrip1.SuspendLayout();
             this.groupBox5.SuspendLayout();
@@ -434,6 +439,7 @@ namespace QuickFixInitiator
             // 
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
+            this.tabControl1.Controls.Add(this.tabPage3);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl1.Location = new System.Drawing.Point(3, 17);
             this.tabControl1.Name = "tabControl1";
@@ -560,7 +566,30 @@ namespace QuickFixInitiator
             this.button3.TabIndex = 0;
             this.button3.Text = "重置";
             this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new EventHandler(button3_Click);
+            this.button3.Click += new System.EventHandler(this.button3_Click);
+            // 
+            // tabPage3
+            // 
+            this.tabPage3.Controls.Add(this.button5);
+            this.tabPage3.Controls.Add(this.label16);
+            this.tabPage3.Controls.Add(this.button4);
+            this.tabPage3.Location = new System.Drawing.Point(4, 21);
+            this.tabPage3.Name = "tabPage3";
+            this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage3.Size = new System.Drawing.Size(250, 94);
+            this.tabPage3.TabIndex = 2;
+            this.tabPage3.Text = "资金股份";
+            this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // button4
+            // 
+            this.button4.Location = new System.Drawing.Point(10, 16);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(75, 23);
+            this.button4.TabIndex = 0;
+            this.button4.Text = "资金";
+            this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
             // groupBox4
             // 
@@ -706,6 +735,25 @@ namespace QuickFixInitiator
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "消息日志";
             // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(14, 54);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(11, 12);
+            this.label16.TabIndex = 1;
+            this.label16.Text = " ";
+            // 
+            // button5
+            // 
+            this.button5.Location = new System.Drawing.Point(152, 16);
+            this.button5.Name = "button5";
+            this.button5.Size = new System.Drawing.Size(75, 23);
+            this.button5.TabIndex = 2;
+            this.button5.Text = "股份";
+            this.button5.UseVisualStyleBackColor = true;
+            this.button5.Click += new System.EventHandler(this.button5_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -730,6 +778,8 @@ namespace QuickFixInitiator
             this.tabPage1.PerformLayout();
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
+            this.tabPage3.ResumeLayout(false);
+            this.tabPage3.PerformLayout();
             this.groupBox4.ResumeLayout(false);
             this.contextMenuStrip1.ResumeLayout(false);
             this.groupBox5.ResumeLayout(false);
@@ -745,6 +795,8 @@ namespace QuickFixInitiator
             int.TryParse(textBox8.Text, out incoming);
             int outgoing = 1;
             int.TryParse(textBox9.Text, out outgoing);
+            _quickFixWrapper.IncomingSeq = incoming;
+            _quickFixWrapper.OutgoingSeq = outgoing;
         }
 
         void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
@@ -762,6 +814,12 @@ namespace QuickFixInitiator
         void 状态查询ToolStripMenuItem_Click(object sender, System.EventArgs e)
         {
             //throw new System.NotImplementedException();
+            if (listView1.SelectedItems.Count > 0)
+            {
+                OrderViewItem item = listView1.SelectedItems[0] as OrderViewItem;
+                string id = item.Order.getClOrdID().getValue();
+                CheckOrder(id);
+            }
         }
 
         void 提交ToolStripMenuItem_Click(object sender, System.EventArgs e)
@@ -913,6 +971,10 @@ namespace QuickFixInitiator
         private TextBox textBox9;
         private TextBox textBox8;
         private Button button3;
+        private TabPage tabPage3;
+        private Button button4;
+        private Label label16;
+        private Button button5;
     }
 }
 
