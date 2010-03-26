@@ -44,8 +44,8 @@ namespace QuickFixInitiator
             else
             {
                 string msg = (string)sender;
-                //label4.Text = "FIX报文->" + msg;
-                dataGridView1.Rows.Insert(0, DateTime.Now.ToString(), "错误",msg);
+                label16.Text = "FIX报文->" + msg;
+                dataGridView1.Rows.Insert(0, DateTime.Now.ToString(), "注意",msg);
             }
             //dataGridView1.Rows.Insert(0, DateTime.Now.ToString(), "撤单");
         }
@@ -435,6 +435,35 @@ namespace QuickFixInitiator
                 }
             }
         }
+        private void CheckOrder(string id)
+        {
+            if (id != null)
+            {
+                if (ordersAll.ContainsKey(id))
+                {
+                    OrderInfo info = (OrderInfo)ordersAll[id];
+                    ClOrdID clordid = info.Order.getClOrdID();
+                    Symbol symbol = info.Order.getSymbol();
+                    QuickFix.Side side = info.Order.getSide();
+
+                    QuickFix42.OrderStatusRequest chk = new OrderStatusRequest(clordid ,symbol ,side );
+                    _quickFixWrapper.Send(chk);
+                }
+            }
+        }
+        private void RejectExecution(string id, ExecutionReport executionReport)
+        {
+            if (!ordersAll.ContainsKey(id))
+            {
+                OrderID ordid = executionReport.getOrderID();
+                ExecID execid = executionReport.getExecID();
+                QuickFix.Side side = executionReport.getSide();
+                Symbol symbol = executionReport.getSymbol();
+                DKReason dkreason = new DKReason (DKReason.NO_MATCHING_ORDER);
+                QuickFix42.DontKnowTrade dk = new DontKnowTrade(ordid, execid, dkreason, symbol, side);
+                _quickFixWrapper.Send(dk);
+            }
+        }
         private string GetNextID()
         {
             string str = DateTime.Now.ToString("yyMMddHHmmss-") + fClOrdID;
@@ -636,6 +665,24 @@ namespace QuickFixInitiator
                     return ordstatus;
                 }
             }
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            QuickFix42.Message message = new QuickFix42.Message(new MsgType("U003"));
+            //message.setString(35, "U003");
+            //message.setString(1, comboBox1.SelectedItem.ToString());
+            //message .setString (
+            _quickFixWrapper.Send(message);
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            QuickFix42.Message message = new QuickFix42.Message(new MsgType("U002"));
+            //message.setString(35, "U003");
+            //message.setString(1, comboBox1.SelectedItem.ToString());
+            //message .setString (
+            _quickFixWrapper.Send(message);
         }
     }
     public class EnumValuePair

@@ -106,8 +106,27 @@ namespace QuickFixInitiator
         /// <param name="pSessionID"></param>
         public void fromApp(QuickFix.Message pMessage, QuickFix.SessionID pSessionID) 
         {
-            base.crack(pMessage, pSessionID);//调用默认处理方法即可
-            //MessageBox.Show("" + pMessage.ToString());
+            string msgtype = pMessage.getHeader ().getString  (35);
+            
+            if (msgtype.StartsWith("Ans"))
+            {
+                //Console.WriteLine(pMessage.ToString());
+                 switch (msgtype)
+                {
+                     case "Ans003":
+                         //string ccy=pMessage .getField (
+                     case "Ans002":
+                         if (OnError != null)
+                         {
+                             OnError(pMessage.ToString(), EventArgs.Empty);
+                         }
+                        break;
+                }
+            }
+            else
+            {
+                base.crack(pMessage, pSessionID);//调用默认处理方法即可
+            }
             pMessage.Dispose();//清理现场，重要
         }
 
@@ -182,6 +201,18 @@ namespace QuickFixInitiator
             {
                 Console.WriteLine("Order " + ClOrdID + " already pending cancel process");
             }
+        }
+        public void Send(QuickFix42.OrderStatusRequest message)
+        {
+            Session.sendToTarget(message, _ssnid);
+        }
+        public void Send(QuickFix42.DontKnowTrade message)
+        {
+            Session.sendToTarget(message, _ssnid);
+        }
+        public void Send(QuickFix42.Message message)
+        {
+            Session.sendToTarget(message, _ssnid);
         }
         public override void onMessage(QuickFix42.ExecutionReport report, SessionID sessionID)
         {
@@ -311,5 +342,45 @@ namespace QuickFixInitiator
         }
     }
     public delegate void OrderCancelRejectEventHandler(object sender, OrderCancelRejectEventArgs args);
+    public class FundStatusReportEventArgs : EventArgs
+    {
+        private string ccy;
+        private double bal;
+        private double avbl;
+        public string Currency
+        {
+            get
+            {
+                return ccy;
+            }
+        }
+        public double Balance
+        {
+            get
+            {
+                return bal;
+            }
+        }
+        public double Available
+        {
+            get
+            {
+                return avbl;
+            }
+        }
+        public FundStatusReportEventArgs(string currency, string balance, string available)
+        {
+            ccy = currency;
+            double.TryParse(balance, out bal);
+            double.TryParse(available, out avbl);
+        }
+    }
+    public delegate void FundStatusReportEventHandler(object sender,FundStatusReportEventArgs args);
+    public class PostionStatusReportEventArgs : EventArgs
+    {
+        public PostionStatusReportEventArgs()
+        {
+        }
+    }
 }
      

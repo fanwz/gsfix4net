@@ -1598,6 +1598,86 @@
       <field name="EncodedTextLen" required="N"/>
       <field name="EncodedText" required="N"/>
     </message>
+      <!--add by wangyj 20090920-->
+    <message name="TrdReq" msgtype="U001" msgcat="app">
+      <field name="Account" required="N" />
+      <field name="SecurityExchange" required="N" />
+      <field name="Symbol" required="N"/>
+      <field name="OrderID" required="N" />
+    </message>
+		    
+    <message name="Ans001" msgtype="Ans001" msgcat="app">
+      <field name="Account" required="Y" />
+      <field name="SecurityExchange" required="N" />
+      <field name="Symbol" required="Y"/>
+      <field name="OrderID" required="N" />
+      <field name="Side" required="N" />
+      <field name="TotalVolumeTraded" required="Y" />
+      <field name="GrossTradeAmt" required="Y"/>
+      <field name="OrderQty" required="N" />
+      <field name="Price" required="Y" />             
+      <field name="AvgPx" required="Y" />  
+    </message>    
+
+    <message name="StkReq" msgtype="U002" msgcat="app">
+      <field name="Account" required="N" />
+      <field name="SecurityExchange" required="N" />
+      <field name="Symbol" required="N"/>
+    </message>
+    
+    <message name="Ans002" msgtype="Ans002" msgcat="app">
+      <field name="Account" required="Y" />
+      <field name="SecurityExchange" required="Y" />
+      <field name="Symbol" required="Y"/>
+      <field name="Currency" required="N" />
+      <field name="stkbal" required="Y" />
+      <field name="stkavl" required="Y"/>
+      <field name="costprice" required="Y" />
+      <field name="mktval" required="Y" />
+      <field name="income" required="Y"/>
+      <field name="lastbal" required="Y" />
+      <field name="price" required="Y" />       
+    </message>    
+
+    <message name="FundReq" msgtype="U003" msgcat="app">
+    <field name="Account" required="N" />
+    <field name="Currency" required="N" />
+    </message>
+    
+    <message name="Ans003" msgtype="Ans003" msgcat="app">
+    <field name="Currency" required="N" />
+    <field name="fundbal" required="Y" />
+    <field name="fundavl" required="Y" />
+    </message>    
+    
+    <message name="MaxReq" msgtype="U004" msgcat="app">
+      <field name="Account" required="N" />
+      <field name="SecurityExchange" required="Y" />
+      <field name="Symbol" required="Y"/>
+      <field name="Price" required="Y" />
+    </message>
+    
+    <message name="Ans004" msgtype="Ans004" msgcat="app">
+      <field name="maxstkqty" required="Y" />
+    </message>
+     
+     <!--message name="OrderReq" msgtype="U005" msgcat="app">
+      <field name="OrderID" required="Y" />
+	    <field name="ClOrdID" required="Y" />
+	    <field name="SecondaryClOrdID" required="N" />
+	    <field name="ClOrdLinkID" required="N" />
+	    <component name="Parties" required="N" />
+	    <field name="OrdStatusReqID" required="N" />
+	    <field name="Account" required="N" />
+	    <field name="AcctIDSource" required="N" />
+	    <component name="Instrument" required="Y" />
+	    <component name="FinancingDetails" required="N" />
+	    <group name="NoUnderlyings" required="N">
+	      <component name="UnderlyingInstrument" required="N" />
+	    </group>
+	    <field name="Side" required="Y" />
+    </message-->
+    
   </messages>
   <fields>
     <field number="1" name="Account" type="STRING"/>
@@ -2619,5 +2699,20 @@
     <field number="444" name="ListStatusText" type="STRING"/>
     <field number="445" name="EncodedListStatusTextLen" type="INT"/>
     <field number="446" name="EncodedListStatusText" type="DATA"/>
+
+<!--add by wangyanjun 20091221-->   
+			<field number="957" name="maxstkqty" type="QTY" /> 
+    	<field number="958" name="fundbal" type="PRICE" />
+    	<field number="959" name="fundavl" type="PRICE" />
+      <field number="960" name="stkbal" type="QTY" />
+      <field number="961" name="stkavl" type="QTY"/>
+      <field number="962" name="costprice" type="PRICE" />
+      <field number="963" name="mktval" type="QTY" />
+      <field number="964" name="income" type="QTY"/>
+      <field number="965" name="lastbal" type="QTY" />
+      <field number="966" name="price" type="PRICE" />       
+
+      
+    
   </fields>
 </fix>
